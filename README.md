@@ -1,4 +1,3 @@
 simple_react_py_app
 ===================
-
-Build single page application with React JS and Python
+Build single page web application with React JS and Python
