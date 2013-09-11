@@ -3,8 +3,12 @@
 # System
 from BaseHTTPServer import BaseHTTPRequestHandler, HTTPServer
 from os import curdir, sep
+import BaseHTTPServer
+import CGIHTTPServer
 import os
+import socket
 import string, cgi, time
+import sys
 import urlparse
 
 # Lib
@@ -21,6 +25,13 @@ webserver_util_path = (
 
 app_config_update_time = os.path.getmtime(app_config_path)
 webserver_util_update_time = os.path.getmtime(webserver_util_path)
+
+def get_local_ip_address(target):
+  s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+  s.connect((target,8000))
+  ipaddr = s.getsockname()[0]
+  s.close()
+  return ipaddr
 
 def should_refresh():
   global app_config_update_time
@@ -72,7 +83,7 @@ def main() :
     # port must not be smaller than 1024
     server = HTTPServer(('', app_config.PORT), WebHandler)
     print 'started httpserver...\n\nhttp://%s:%s' % (
-      app_config.IP,
+      get_local_ip_address('www.google.com'),
       app_config.PORT
     )
     server.serve_forever()
