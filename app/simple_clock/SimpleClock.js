@@ -19,7 +19,7 @@ var SimpleClock = React.createClass({
     var startTime = this.props.startTime;
     return {
       time: startTime,
-      timeAdjustment: (new Date()) - startTime
+      timeOffset: (new Date()) - startTime
     };
   },
 
@@ -30,7 +30,7 @@ var SimpleClock = React.createClass({
     var startTime = nextProps.startTime;
     this.setState({
       time: startTime,
-      timeAdjustment: (new Date()) - startTime
+      timeOffset: (new Date()) - startTime
     });
   },
 
@@ -64,7 +64,7 @@ var SimpleClock = React.createClass({
 
   _tick: function() {
     this.setState({
-      time: (new Date()) - this.state.timeAdjustment
+      time: (new Date()) - this.state.timeOffset
     });
   }
 });

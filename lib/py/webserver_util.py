@@ -1,6 +1,8 @@
 # System
 import cgi
 import execjs
+import time
+import json
 
 # Lib
 import app_config
@@ -15,7 +17,7 @@ function render() {
   var callback = function(html) {
     throw new Error(delimiter + html + delimiter);
   };
-  var props = {runAtServer: true, requestPath: '%(request_path)s'}
+  var props = {runAtServer: true, requestData: %(request_data)s}
   React.renderComponentToString(Component(props), callback);
 }
 '''
@@ -26,7 +28,7 @@ REACT_JS_BROWSER_RENDER_CODE = '''
 (function() {
   var React = require('React');
   var Component = require('%(module_name)s');
-  var props = {runAtServer: false, requestPath: '%(request_path)s'}
+  var props = {runAtServer: false, requestData: %(request_data)s}
   React.renderComponent(Component(props), document.body);
 })();
 </script>
@@ -61,11 +63,11 @@ _supported_file_type = {
 def should_reload():
   return False
 
-def render_at_server(module_name, request_path, haste_data):
+def render_at_server(module_name, request_data, haste_data):
   delimiter = '~' * 10
   js = REACT_JS_SERVER_RENDER_CODE % {
     'delimiter': delimiter,
-    'request_path': request_path,
+    'request_data': request_data,
     'module_name': cgi.escape(module_name),
     'js': haste_data.get('js'),
   }
@@ -82,9 +84,9 @@ def render_at_server(module_name, request_path, haste_data):
     else:
       return text
 
-def render_at_browser(module_name, request_path):
+def render_at_browser(module_name, request_data):
   return  REACT_JS_BROWSER_RENDER_CODE % {
-    'request_path': request_path,
+    'request_data': request_data,
     'module_name': cgi.escape(module_name),
   }
 
@@ -128,11 +130,16 @@ def handle_get(path, query_params):
     data = haste.require_module_css(module_name)
     content = data.get('css')
   elif file_type == 'html':
+    request_data = json.dumps({
+      'path': path,
+      'query_params': query_params,
+      'time': int(time.time()) * 1000 # convert to JS timestamp
+    });
     data = haste.require_module_js(module_name)
     content = HTML_PAGE % {
       'module_name': cgi.escape(module_name),
-      'browser_render_html': render_at_browser(module_name, path),
-      'server_render_html': render_at_server(module_name, path, data),
+      'browser_render_html': render_at_browser(module_name, request_data),
+      'server_render_html': render_at_server(module_name, request_data, data),
       'version': cgi.escape(app_config.VERSION)
     }
 

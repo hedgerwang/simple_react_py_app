@@ -7,7 +7,7 @@
 *.o
 *.so
 nohup.out
-lib/py/*.pyc
+./lib/py/*.pyc
 
 # Packages #
 ############
