@@ -4,3 +4,12 @@
   padding: 48px 24px;
   text-align: center;
 }
+
+.SimpleClock_label {
+  color: #eee;
+  font-family: "Helvetica Neue Light", "Helvetica Neue", Arial, sans-serif;
+  font-size: 12px;
+  font-weight: 500;
+  margin: 0;
+  text-shadow: 0 0 1px #000;
+}

@@ -56,10 +56,10 @@ var SimpleClockFlipBoard = React.createClass({
 
     return (
       <div class={classNames.join(' ')}>
-        <div class="SimpleClockFlipBoard_p1">{from}</div>
-        <div class="SimpleClockFlipBoard_p2">{from}</div>
-        <div class="SimpleClockFlipBoard_p3">{to}</div>
-        <div class="SimpleClockFlipBoard_p4">{to}</div>
+        <div class="SimpleClockFlipBoard_p1" aria-hidden="true">{from}</div>
+        <div class="SimpleClockFlipBoard_p2" aria-hidden="true">{from}</div>
+        <div class="SimpleClockFlipBoard_p3" aria-hidden="true">{to}</div>
+        <div class="SimpleClockFlipBoard_p4" aria-hidden="true">{to}</div>
         <div class="SimpleClockFlipBoard_p0">{to}</div>
       </div>
     );

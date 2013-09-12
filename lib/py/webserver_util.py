@@ -1,8 +1,10 @@
 # System
+from time import gmtime, strftime
+import calendar, datetime
 import cgi
 import execjs
-import time
 import json
+import time
 
 # Lib
 import app_config
@@ -130,10 +132,14 @@ def handle_get(path, query_params):
     data = haste.require_module_css(module_name)
     content = data.get('css')
   elif file_type == 'html':
+    current_utc_time_in_sec = calendar.timegm(
+      datetime.datetime.utcnow().utctimetuple()
+    )
+
     request_data = json.dumps({
       'path': path,
       'query_params': query_params,
-      'time': int(time.time()) * 1000 # convert to JS timestamp
+      'time': current_utc_time_in_sec * 1000 # convert to JS timestamp
     });
     data = haste.require_module_js(module_name)
     content = HTML_PAGE % {

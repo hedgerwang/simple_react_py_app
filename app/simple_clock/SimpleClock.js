@@ -19,7 +19,7 @@ var SimpleClock = React.createClass({
     var startTime = this.props.startTime;
     return {
       time: startTime,
-      timeOffset: (new Date()) - startTime
+      timeOffset: (new Date()).getTime() - startTime
     };
   },
 
@@ -48,16 +48,28 @@ var SimpleClock = React.createClass({
    */
   render: function() {
     var date = new Date(this.state.time);
-    var hours = date.getHours();
-    var ampm = hours < 12 ? 'AM' : 'PM'
+    var hours = date.getUTCHours();
+    var ampm = hours < 12 ? 'AM' : 'PM';
+    if (hours === 0) {
+      ampm = 'AM';
+      hours = 12;
+    } else if (hours < 12) {
+      ampm = 'AM';
+    } else if (hours === 12) {
+      ampm = 'PM';
+    } else {
+      hours -= 12;
+      ampm = 'PM';
+    }
     return (
       <div class="SimpleClock_root">
         <SimpleClockDigits
           label={ampm}
-          value={date.getHours()}
+          value={hours}
         />
-        <SimpleClockDigits value={date.getMinutes()} />
-        <SimpleClockDigits value={date.getSeconds()} />
+        <SimpleClockDigits value={date.getUTCMinutes()} />
+        <SimpleClockDigits value={date.getUTCSeconds()} />
+        <h3 class="SimpleClock_label">UTC Clock</h3>
       </div>
     );
   },
