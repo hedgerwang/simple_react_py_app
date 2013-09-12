@@ -1,0 +1,15 @@
+.SimpleClockDigits_root {
+  color: #444;
+  display: inline-block;
+  font-family: "Helvetica Neue", Arial, sans-serif;
+  position: relative;
+}
+
+.SimpleClockDigits_label {
+  color: #fff;
+  font-weight: 800;
+  left: 18px;
+  position: absolute;
+  top: 18px;
+  z-index: 1000;
+}

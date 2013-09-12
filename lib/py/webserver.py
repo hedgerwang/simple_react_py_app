@@ -70,7 +70,7 @@ class WebHandler(BaseHTTPRequestHandler) :
 
     if should_refresh():
       print '-' * 80
-      print 'Soft Refresh Web Server from version "%s"' % app_config.version
+      print 'Soft Refresh Web Server from version "%s"' % app_config.VERSION
       print '-' * 80
       reload(app_config)
       reload(webserver_util)

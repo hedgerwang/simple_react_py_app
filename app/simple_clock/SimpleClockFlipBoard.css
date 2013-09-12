@@ -1,0 +1,81 @@
+.SimpleClockFlipBoard_root {
+  -webkit-perspective: 1200;
+  background: #666;
+  border-radius: 0.1em;
+  box-shadow: 0 3px 3px #222;
+  display: inline-block;
+  font-family: "Helvetica Neue", Arial, sans-serif;
+  font-size: 120px;
+  margin: 0.1em 0.05em;
+  position: relative;
+  vertical-align: middle;
+}
+
+.SimpleClockFlipBoard_p0,
+.SimpleClockFlipBoard_p1,
+.SimpleClockFlipBoard_p2,
+.SimpleClockFlipBoard_p3,
+.SimpleClockFlipBoard_p4 {
+  background: #0a0809;
+  border-radius: 0.1em;
+  color: #fff;
+  line-height: 1.52em;
+  padding: 0.1em 0.2em;
+  text-align: center;
+  white-space: nowrap;
+  position: absolute;
+  left: 0;
+  top: 0;
+  z-index: 1;
+}
+
+.SimpleClockFlipBoard_p2,
+.SimpleClockFlipBoard_p3 {
+  -webkit-backface-visibility: hidden;
+  -webkit-perspective: 600;
+  -webkit-transform-style: preserve-3d;
+  -webkit-transition-property: -webkit-transform;
+  -webkit-transition-duration: 600ms;
+}
+
+.SimpleClockFlipBoard_p1 {
+  clip: rect(0.86em 5em 5em 0);
+  z-index: 5;
+}
+
+.SimpleClockFlipBoard_p2 {
+  -webkit-transform: rotateX(0);
+  clip: rect(0 5em 0.84em 0);
+  z-index: 4;
+}
+
+.SimpleClockFlipBoard_p3 {
+  -webkit-transform: rotateX(180deg);
+  clip: rect(0.86em 5em 5em 0);
+  z-index: 6;
+}
+
+.SimpleClockFlipBoard_p4 {
+  clip: rect(0 5em 0.84em 0);
+  z-index: 2;
+}
+
+.SimpleClockFlipBoard_p0 {
+  position: relative;
+  visibility: hidden;
+}
+
+.SimpleClockFlipBoard_root.animating .SimpleClockFlipBoard_p2 {
+  -webkit-transform: rotateX(-180deg);
+}
+
+.SimpleClockFlipBoard_root.animating .SimpleClockFlipBoard_p3 {
+  -webkit-transform: rotateX(0deg);
+}
+
+.SimpleClockFlipBoard_root.animationComplete .SimpleClockFlipBoard_p2,
+.SimpleClockFlipBoard_root.animationComplete .SimpleClockFlipBoard_p3 {
+  -webkit-transition-property: none;
+}
+
+

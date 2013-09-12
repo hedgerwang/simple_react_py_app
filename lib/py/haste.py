@@ -56,10 +56,20 @@ def _build_module_text(module_name, text):
     'text': text
   };
 
+_cached_module_path = {}
+
 def _get_module_path(module_name):
+  if module_name in _cached_module_path:
+    test_path = _cached_module_path[module_name]
+    if (os.path.isfile(test_path)):
+      return test_path
+    else:
+      del _cached_module_path[module_name]
+
   for path in app_config.JS_MODULES_PATHS:
     test_path = path + module_name + '.js'
     if (os.path.isfile(test_path)):
+      _cached_module_path[module_name] = test_path
       return os.path.relpath(test_path)
   return None
 
